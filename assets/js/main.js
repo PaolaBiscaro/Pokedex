@@ -1,3 +1,6 @@
+import { pokeapi } from './poke-api.js'
+
+
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
 
@@ -28,7 +31,6 @@ function loadPokemonItens(offset, limit) {
 
 
 loadPokemonItens(offset, limit)
-descriptionPokemonPage(descriptionPokemon)
 
 loadMoreButton.addEventListener('click', () => {
     offset += limit

@@ -1,4 +1,6 @@
+import { Pokemon } from './pokemon-model.js'
 const pokeapi = {}
+
 
 function convertPokeApiDetailToPokemon(pokeDetail){
     const pokemon = new Pokemon()
@@ -13,6 +15,11 @@ function convertPokeApiDetailToPokemon(pokeDetail){
 
     pokemon.photo = pokeDetail.sprites.other["official-artwork"].front_default
 
+    pokemon.shiny = pokeDetail.sprites.other["official-artwork"].front_shiny
+
+    pokemon.weight = pokeDetail.weight
+    pokemon.height = pokeDetail.height
+
     return pokemon
     
 }
@@ -25,7 +32,6 @@ pokeapi.getPokemonDetail = (pokemon) => {
 
 }
 
-
 pokeapi.getPokemons = (offset = 0, limit = 5) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
@@ -37,7 +43,16 @@ pokeapi.getPokemons = (offset = 0, limit = 5) => {
         .then((pokemonsDetails) => pokemonsDetails)
 }
 
+
+pokeapi.getPokemonDetailByNumber = async function (id){
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return convertPokeApiDetailToPokemon(data)
+}
+
 console.log(pokeapi)
 
 
-
+export {pokeapi}
